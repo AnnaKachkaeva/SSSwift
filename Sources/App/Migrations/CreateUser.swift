@@ -7,6 +7,7 @@ struct CreateUser: Migration {
             .id()
             .field("name", .string, .required)
             .field("age", .int, .required)
+  //          .field("securities", .dictionary, .required)
             .create()
     }
 

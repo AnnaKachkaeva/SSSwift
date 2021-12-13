@@ -5,6 +5,9 @@ import Vapor
 // configures your application
 public func configure(_ app: Application) throws {
 
+    app.http.server.configuration.hostname = "0.0.0.0"
+    app.http.server.configuration.port = 8080
+
     app.databases.use(.postgres(
         hostname: Environment.get("DATABASE_HOST") ?? "localhost",
         port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? PostgresConfiguration.ianaPortNumber,
@@ -16,6 +19,7 @@ public func configure(_ app: Application) throws {
     //app.logger.logLevel = .debug//-shows every action of fluent
     app.migrations.add(CreateEquity())
     app.migrations.add(CreateUser())
+    app.migrations.add(CreateSecurityUserPivot())
     
     //try app.autoRevert().wait()//-clear db table
     

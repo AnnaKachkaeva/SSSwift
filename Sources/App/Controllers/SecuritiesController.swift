@@ -9,8 +9,9 @@ struct SecuritiesController: RouteCollection {
         securityRoutes.get(":securityID", use: getByID)
         securityRoutes.put(":securityID", use: updateByID)
         securityRoutes.delete(":securityID", use: deleteByID)
-        securityRoutes.get("search", use: searchByTiker)
+        securityRoutes.get("search", ":tiker", use: searchByTiker)
         securityRoutes.get("sorted", use: sortByPrice)
+        //securityRoutes.get("show", use: showBestVariant) //":age", ":budget", ":pity",
     }
         
         
@@ -60,6 +61,17 @@ struct SecuritiesController: RouteCollection {
     func sortByPrice(_ req: Request) -> EventLoopFuture<[Security]> {
         Security.query(on: req.db).sort(\.$price, .ascending).all()
     }
+    
+//    func showBestVariant(_ req: Request) -> EventLoopFuture<[Security]>  {
+//        
+//        var arrOfSares = Security.query(on: req.db).sort(\.$price, .ascending).all()
+//        for i in arrOfSares {
+//            print(i)
+//        }
+//        
+//        return arrOfSares
+//
+//    }
         
 }
 
